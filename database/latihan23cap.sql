@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27 Mei 2025 pada 07.52
--- Versi Server: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Jun 15, 2025 at 12:07 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `berita`
+-- Table structure for table `berita`
 --
 
 CREATE TABLE `berita` (
@@ -39,7 +39,7 @@ CREATE TABLE `berita` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `berita`
+-- Dumping data for table `berita`
 --
 
 INSERT INTO `berita` (`idberita`, `judul`, `kategori`, `headline`, `isi_berita`, `pengirim`, `tanggal_publish`) VALUES
@@ -51,7 +51,28 @@ INSERT INTO `berita` (`idberita`, `judul`, `kategori`, `headline`, `isi_berita`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori_berita`
+-- Table structure for table `dokter`
+--
+
+CREATE TABLE `dokter` (
+  `id` int(11) NOT NULL,
+  `nama_dokter` varchar(100) NOT NULL,
+  `spesialis` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dokter`
+--
+
+INSERT INTO `dokter` (`id`, `nama_dokter`, `spesialis`) VALUES
+(2, 'dr.Suseno Sumanta', 'Dokter Bedah'),
+(3, 'dr.Arsa', 'Dokter Umum'),
+(4, 'dr boyke', 'jantung');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_berita`
 --
 
 CREATE TABLE `kategori_berita` (
@@ -60,7 +81,7 @@ CREATE TABLE `kategori_berita` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `kategori_berita`
+-- Dumping data for table `kategori_berita`
 --
 
 INSERT INTO `kategori_berita` (`idkategori`, `kategori`) VALUES
@@ -69,7 +90,57 @@ INSERT INTO `kategori_berita` (`idkategori`, `kategori`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `pasien`
+--
+
+CREATE TABLE `pasien` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `alamat` text,
+  `no_telp` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pasien`
+--
+
+INSERT INTO `pasien` (`id`, `nama`, `tanggal_lahir`, `alamat`, `no_telp`) VALUES
+(1, 'bisaa', '2000-10-10', 'nndsjkjksa', '98892998'),
+(2, 'jsjfkjk', '2000-10-10', 'sjkdskl', '989932'),
+(3, 'gagal', '2000-02-01', 'kjsdjj', '2389893289'),
+(4, 'yusak', '2000-12-07', 'pati', '72838278837289398');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pendaftaran`
+--
+
+CREATE TABLE `pendaftaran` (
+  `id` int(11) NOT NULL,
+  `pasien_id` int(11) DEFAULT NULL,
+  `dokter_id` int(11) DEFAULT NULL,
+  `keluhan` text,
+  `tanggal_kunjungan` date DEFAULT NULL,
+  `jam_kunjungan` time DEFAULT NULL,
+  `status` enum('dalam proses','disetujui','ditolak') DEFAULT 'dalam proses'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pendaftaran`
+--
+
+INSERT INTO `pendaftaran` (`id`, `pasien_id`, `dokter_id`, `keluhan`, `tanggal_kunjungan`, `jam_kunjungan`, `status`) VALUES
+(1, 1, 2, 'bnnsns', '2025-06-18', '10:00:00', 'dalam proses'),
+(2, 2, 2, 'jkkjfdjk', '2025-06-19', '10:00:00', 'dalam proses'),
+(3, 3, 2, 'jjkjks', '2025-06-20', '10:00:00', 'disetujui'),
+(4, 4, 3, 'Dijotosin totot', '2025-06-22', '10:00:00', 'disetujui');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -81,13 +152,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `create_at`) VALUES
-(1, 'triono', '$2y$10$T6VG7O4ppr5qvFC2zKEgJepNZs7rddbIDoRHlAjP33SPO3KBnuvHa', 'admin', '2025-03-18 02:17:36'),
-(2, 'triono1', '$2y$10$T6VG7O4ppr5qvFC2zKEgJepNZs7rddbIDoRHlAjP33SPO3KBnuvHa', 'user', '2025-03-18 03:02:27'),
-(3, 'admin1', '$2y$10$OHfX/0JLiVejQYhqC7M/tOh0wicZyVrowBdjDyRMPx40iC4wv4.Pu', 'admin', '2025-05-13 13:26:44');
+(5, 'admin123', '$2y$10$b5HOcBtkcKJa0ud5OOgeAOrNwLvAeFJWVYG8e86MsSBMdHAhCO0B.', 'admin', '2025-06-11 15:20:26'),
+(6, 'user123', '$2y$10$QmziPFEwORzIrxDGAmk59OJy7xr.r.WGFUjwhP3LGjej3b7.ALnQy', 'user', '2025-06-13 10:28:13');
 
 --
 -- Indexes for dumped tables
@@ -100,10 +170,30 @@ ALTER TABLE `berita`
   ADD PRIMARY KEY (`idberita`);
 
 --
+-- Indexes for table `dokter`
+--
+ALTER TABLE `dokter`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kategori_berita`
 --
 ALTER TABLE `kategori_berita`
   ADD PRIMARY KEY (`idkategori`);
+
+--
+-- Indexes for table `pasien`
+--
+ALTER TABLE `pasien`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pasien_id` (`pasien_id`),
+  ADD KEY `dokter_id` (`dokter_id`);
 
 --
 -- Indexes for table `users`
@@ -120,16 +210,48 @@ ALTER TABLE `users`
 --
 ALTER TABLE `berita`
   MODIFY `idberita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `dokter`
+--
+ALTER TABLE `dokter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `kategori_berita`
 --
 ALTER TABLE `kategori_berita`
   MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pasien`
+--
+ALTER TABLE `pasien`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  ADD CONSTRAINT `pendaftaran_ibfk_1` FOREIGN KEY (`pasien_id`) REFERENCES `pasien` (`id`),
+  ADD CONSTRAINT `pendaftaran_ibfk_2` FOREIGN KEY (`dokter_id`) REFERENCES `dokter` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

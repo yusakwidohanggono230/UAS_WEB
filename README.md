@@ -1,2 +1,8 @@
-# CI_web23
- latihan ci 3
+# UAS_WEB
+ NAMA : YUSAK WIDO HANGGONO
+ KELAS : SI 23 M SIM
+ NIM : 1223150034
+
+ ADMIN
+ USERNAME : admin123
+ PASSWORD : admin123
